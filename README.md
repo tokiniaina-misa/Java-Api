@@ -5,12 +5,13 @@ pour gérer une file d’attente de type FIFO (First In, First Out).
 Les tickets sont créés, visualisés et servis à la manière d’un système de guichet.
 ---
 ### 📦 Technologies
-Java 17+
-Docker (optionnel)
-Git
-curl ou Postman pour les tests
+- Java 17+
+- Docker (optionnel)
+- Git
+- curl ou Postman pour les tests
 ---
 ### 📁 Structure du projet
+```
 rest-api-java/
 ├── src/
 │   ├── Main.java
@@ -25,6 +26,7 @@ rest-api-java/
 ├── .dockerignore
 ├── build.sh
 ├── README.md
+```
 ---
 ### Endpoints de l'API
 
@@ -52,12 +54,12 @@ $ curl http://localhost:8080/api/ticket-count?id=1
 $ curl http://localhost:8080/api/ticket-list?id=1
 ```
 ### ✅ Fonctionnalités
-• File FIFO par guichet
-• Tickets numérotés automatiquement
-• API REST sans dépendances
-• Interface HTML sans JavaScript
-• Conteneurisation via Docker (facultatif)
-• Tests simples avec curl
+- File d’attente FIFO par guichet
+- Numérotation automatique des tickets
+- API REST sans dépendance externe
+- Interface HTML statique (sans JavaScript)
+- Conteneurisation via Docker (optionnelle)
+- Testable facilement avec curl
 ---
 ### 👤 Auteur
 Projet réalisé par : Misa Tokiniaina
