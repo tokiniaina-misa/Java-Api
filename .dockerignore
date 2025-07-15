@@ -1,0 +1,10 @@
+.git
+.gitignore
+README.md
+frontend/
+*.class
+*.log
+*.tmp
+*.swp
+.idea/
+.vscode/

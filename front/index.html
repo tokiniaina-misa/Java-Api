@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Gestion de file d'attente</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f0f2f5;
+      color: #333;
+      max-width: 800px;
+      margin: auto;
+      padding: 20px;
+    }
+
+    h1 {
+      color: #0078d7;
+      text-align: center;
+    }
+
+    form {
+      background: #fff;
+      padding: 15px;
+      margin-bottom: 10px;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    label {
+      flex: 1;
+      font-weight: bold;
+    }
+
+    select {
+      margin-left: 10px;
+      padding: 5px;
+    }
+
+    button {
+      background: #0078d7;
+      color: white;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-left: 10px;
+    }
+
+    button:hover {
+      background: #005fa3;
+    }
+
+    iframe {
+      width: 100%;
+      height: 200px;
+      border: none;
+      background: #fff;
+      border-radius: 8px;
+      padding: 10px;
+      box-shadow: inset 0 0 5px rgba(0,0,0,0.1);
+    }
+
+    .section-title {
+      font-size: 1.2em;
+      margin-top: 20px;
+      border-bottom: 2px solid #0078d7;
+      padding-bottom: 5px;
+    }
+  </style>
+</head>
+<body>
+  <h1>🎫 Gestion des Tickets</h1>
+
+  <div class="section-title">Créer un ticket</div>
+  <form action="/api/create-ticket" method="get" target="output">
+    <label>Guichet</label>
+    <select name="id">
+      <option value="1">Guichet 1</option>
+      <option value="2">Guichet 2</option>
+      <option value="3">Guichet 3</option>
+    </select>
+    <button>Créer</button>
+  </form>
+
+  <div class="section-title">Servir un ticket</div>
+  <form action="/api/serve-ticket" method="get" target="output">
+    <label>Guichet</label>
+    <select name="id">
+      <option value="1">Guichet 1</option>
+      <option value="2">Guichet 2</option>
+      <option value="3">Guichet 3</option>
+    </select>
+    <button>Servir</button>
+  </form>
+
+  <div class="section-title">Voir le ticket en tête</div>
+  <form action="/api/peek-ticket" method="get" target="output">
+    <label>Guichet</label>
+    <select name="id">
+      <option value="1">Guichet 1</option>
+      <option value="2">Guichet 2</option>
+      <option value="3">Guichet 3</option>
+    </select>
+    <button>Voir</button>
+  </form>
+
+  <div class="section-title">Compter les tickets</div>
+  <form action="/api/ticket-count" method="get" target="output">
+    <label>Guichet</label>
+    <select name="id">
+      <option value="1">Guichet 1</option>
+      <option value="2">Guichet 2</option>
+      <option value="3">Guichet 3</option>
+    </select>
+    <button>Compter</button>
+  </form>
+
+  <div class="section-title">Lister les tickets</div>
+  <form action="/api/ticket-list" method="get" target="output">
+    <label>Guichet</label>
+    <select name="id">
+      <option value="1">Guichet 1</option>
+      <option value="2">Guichet 2</option>
+      <option value="3">Guichet 3</option>
+    </select>
+    <button>Lister</button>
+  </form>
+
+  <h3>📄 Résultat</h3>
+  <iframe name="output"></iframe>
+</body>
+</html>
