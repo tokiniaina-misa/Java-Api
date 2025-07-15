@@ -62,6 +62,6 @@ $ curl http://localhost:8080/api/ticket-list?id=1
 - Testable facilement avec curl
 ---
 ### 👤 Auteur
-Projet réalisé par : Misa Tokiniaina
-GitHub : https://github.com/tokiniaina-misa
+- Projet réalisé par : Misa Tokiniaina
+- GitHub : https://github.com/tokiniaina-misa
 ---
