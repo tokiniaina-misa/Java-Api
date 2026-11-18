@@ -2,134 +2,85 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Gestion de file d'attente</title>
-  <style>
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      background: #f0f2f5;
-      color: #333;
-      max-width: 800px;
-      margin: auto;
-      padding: 20px;
-    }
 
-    h1 {
-      color: #0078d7;
-      text-align: center;
-    }
-
-    form {
-      background: #fff;
-      padding: 15px;
-      margin-bottom: 10px;
-      border-radius: 8px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    label {
-      flex: 1;
-      font-weight: bold;
-    }
-
-    select {
-      margin-left: 10px;
-      padding: 5px;
-    }
-
-    button {
-      background: #0078d7;
-      color: white;
-      border: none;
-      padding: 6px 12px;
-      border-radius: 4px;
-      cursor: pointer;
-      margin-left: 10px;
-    }
-
-    button:hover {
-      background: #005fa3;
-    }
-
-    iframe {
-      width: 100%;
-      height: 200px;
-      border: none;
-      background: #fff;
-      border-radius: 8px;
-      padding: 10px;
-      box-shadow: inset 0 0 5px rgba(0,0,0,0.1);
-    }
-
-    .section-title {
-      font-size: 1.2em;
-      margin-top: 20px;
-      border-bottom: 2px solid #0078d7;
-      padding-bottom: 5px;
-    }
-  </style>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>🎫 Gestion des Tickets</h1>
+  <main class="app">
+    <header class="app-header">
+      <h1>Gestion des tickets</h1>
+      <p>Choisissez un guichet, puis lancez une action sur sa file.</p>
+    </header>
 
-  <div class="section-title">Créer un ticket</div>
-  <form action="/api/create-ticket" method="get" target="output">
-    <label>Guichet</label>
-    <select name="id">
-      <option value="1">Guichet 1</option>
-      <option value="2">Guichet 2</option>
-      <option value="3">Guichet 3</option>
-    </select>
-    <button>Créer</button>
-  </form>
+    <div class="layout">
+      <form id="queue-form" class="panel controls" action="/api/ticket-list" method="get" target="output">
+        <fieldset class="counter-picker">
+          <legend>Guichet</legend>
+          <div class="segmented">
+            <input type="radio" name="id" id="guichet-1" value="1" checked>
+            <label for="guichet-1">Guichet 1</label>
 
-  <div class="section-title">Servir un ticket</div>
-  <form action="/api/serve-ticket" method="get" target="output">
-    <label>Guichet</label>
-    <select name="id">
-      <option value="1">Guichet 1</option>
-      <option value="2">Guichet 2</option>
-      <option value="3">Guichet 3</option>
-    </select>
-    <button>Servir</button>
-  </form>
+            <input type="radio" name="id" id="guichet-2" value="2">
+            <label for="guichet-2">Guichet 2</label>
 
-  <div class="section-title">Voir le ticket en tête</div>
-  <form action="/api/peek-ticket" method="get" target="output">
-    <label>Guichet</label>
-    <select name="id">
-      <option value="1">Guichet 1</option>
-      <option value="2">Guichet 2</option>
-      <option value="3">Guichet 3</option>
-    </select>
-    <button>Voir</button>
-  </form>
+            <input type="radio" name="id" id="guichet-3" value="3">
+            <label for="guichet-3">Guichet 3</label>
+          </div>
+        </fieldset>
 
-  <div class="section-title">Compter les tickets</div>
-  <form action="/api/ticket-count" method="get" target="output">
-    <label>Guichet</label>
-    <select name="id">
-      <option value="1">Guichet 1</option>
-      <option value="2">Guichet 2</option>
-      <option value="3">Guichet 3</option>
-    </select>
-    <button>Compter</button>
-  </form>
+        <section class="action-group" aria-labelledby="group-write">
+          <h2 id="group-write">Modifier la file</h2>
 
-  <div class="section-title">Lister les tickets</div>
-  <form action="/api/ticket-list" method="get" target="output">
-    <label>Guichet</label>
-    <select name="id">
-      <option value="1">Guichet 1</option>
-      <option value="2">Guichet 2</option>
-      <option value="3">Guichet 3</option>
-    </select>
-    <button>Lister</button>
-  </form>
+          <button type="submit" class="action action-write" formaction="/api/create-ticket" data-label="Créer un ticket">
+            <span class="action-name">Créer un ticket</span>
+            <span class="action-hint">Ajoute un nouveau ticket à la file</span>
+          </button>
 
-  <h3>📄 Résultat</h3>
-  <iframe name="output"></iframe>
+          <button type="submit" class="action action-write" formaction="/api/serve-ticket" data-label="Servir un ticket">
+            <span class="action-name">Servir un ticket</span>
+            <span class="action-hint">Appelle le prochain ticket</span>
+          </button>
+        </section>
+
+        <section class="action-group" aria-labelledby="group-read">
+          <h2 id="group-read">Consulter la file</h2>
+
+          <button type="submit" class="action action-read" formaction="/api/peek-ticket" data-label="Ticket en tête">
+            <span class="action-name">Voir le ticket en tête</span>
+            <span class="action-hint">Consulte sans le retirer de la file</span>
+          </button>
+
+          <button type="submit" class="action action-read" formaction="/api/ticket-count" data-label="Nombre de tickets">
+            <span class="action-name">Compter les tickets</span>
+            <span class="action-hint">Nombre de tickets en attente</span>
+          </button>
+
+          <button type="submit" class="action action-read" formaction="/api/ticket-list" data-label="Liste des tickets">
+            <span class="action-name">Lister les tickets</span>
+            <span class="action-hint">Tous les tickets de la file</span>
+          </button>
+        </section>
+      </form>
+
+      <section class="panel result" aria-labelledby="result-title">
+        <div class="result-head">
+          <h2 id="result-title">Résultat</h2>
+          <p id="result-status" class="result-status" aria-live="polite">Aucune action lancée</p>
+        </div>
+
+        <div id="result-frame" class="result-frame" aria-busy="false">
+          <iframe name="output" title="Résultat de la dernière action"></iframe>
+          <p id="result-empty" class="result-empty">Le résultat de l'action choisie s'affichera ici.</p>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <script src="script.js"></script>
 </body>
 </html>

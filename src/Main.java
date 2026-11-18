@@ -15,11 +15,36 @@ public class Main {
         server.createContext("/api/ticket-list", new TicketHandler(service));
 
         server.createContext("/", exchange -> {
-            byte[] html = Files.readAllBytes(Path.of("front/index.html"));
-            exchange.sendResponseHeaders(200, html.length);
-            exchange.getResponseBody().write(html);
-            exchange.getResponseBody().close();
-        });
+    String uri = exchange.getRequestURI().getPath();
+
+    Path file;
+
+    if (uri.equals("/")) {
+        file = Path.of("front/index.html");
+    } else {
+        file = Path.of("front").resolve(uri.substring(1)).normalize();
+    }
+
+    if (!file.startsWith(Path.of("front")) || !Files.exists(file) || Files.isDirectory(file)) {
+        exchange.sendResponseHeaders(404, -1);
+        exchange.close();
+        return;
+    }
+
+    String contentType = Files.probeContentType(file);
+
+    if (contentType == null) {
+        contentType = "application/octet-stream";
+    }
+
+    exchange.getResponseHeaders().set("Content-Type", contentType + "; charset=UTF-8");
+
+    byte[] content = Files.readAllBytes(file);
+
+    exchange.sendResponseHeaders(200, content.length);
+    exchange.getResponseBody().write(content);
+    exchange.close();
+});
 
         server.setExecutor(null);
         System.out.println("Serveur sur http://localhost:8080");
